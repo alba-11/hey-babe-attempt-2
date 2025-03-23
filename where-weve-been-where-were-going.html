@@ -39,28 +39,29 @@
     </footer>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([40.4168, -3.7038], 5); // Centered on Madrid
+        document.addEventListener('DOMContentLoaded', () => {
+            const map = L.map('map').setView([40.4168, -3.7038], 5); // Centered on Madrid
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
-        const cities = [
-            { name: "Madrid", coords: [40.4168, -3.7038] },
-            { name: "Toledo", coords: [39.8628, -4.0273] },
-            { name: "Ávila", coords: [40.6565, -4.6818] },
-            { name: "Segovia", coords: [40.9429, -4.1088] },
-            { name: "Mérida", coords: [38.9170, -6.3440] },
-            { name: "Valencia", coords: [39.4699, -0.3763] },
-            { name: "Timmins", coords: [48.4758, -81.3305] },
-            { name: "Ottawa", coords: [45.4215, -75.6972] },
-            { name: "Toronto", coords: [43.6510, -79.3470] }
-        ];
+            const cities = [
+                { name: "Madrid", coords: [40.4168, -3.7038] },
+                { name: "Toledo", coords: [39.8628, -4.0273] },
+                { name: "Ávila", coords: [40.6565, -4.6818] },
+                { name: "Segovia", coords: [40.9429, -4.1088] },
+                { name: "Mérida", coords: [38.9170, -6.3440] },
+                { name: "Valencia", coords: [39.4699, -0.3763] },
+                { name: "Timmins", coords: [48.4758, -81.3305] },
+                { name: "Ottawa", coords: [45.4215, -75.6972] },
+                { name: "Toronto", coords: [43.6510, -79.3470] }
+            ];
 
-        cities.forEach(city => {
-            L.marker(city.coords).addTo(map)
-                .bindPopup(`<b>${city.name}</b>`)
-                .openPopup();
+            cities.forEach(city => {
+                L.marker(city.coords).addTo(map)
+                    .bindPopup(`<b>${city.name}</b>`);
+            });
         });
     </script>
 </body>
