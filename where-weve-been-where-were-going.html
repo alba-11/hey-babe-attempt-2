@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where We've Been, Where We're Going</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 300px; /* Adjusted height */
+            width: 100%;
+        }
+        .back-button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Where We've Been, Where We're Going</h1>
+    </header>
+    <main>
+        <div id="map"></div>
+        <a href="index.html" class="back-button">Back to Home</a>
+    </main>
+    <footer>
+        <p>&copy; 2025 Our Relationship, Now a Website</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([40.4168, -3.7038], 5); // Centered on Madrid
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const cities = [
+            { name: "Madrid", coords: [40.4168, -3.7038] },
+            { name: "Toledo", coords: [39.8628, -4.0273] },
+            { name: "Ávila", coords: [40.6565, -4.6818] },
+            { name: "Segovia", coords: [40.9429, -4.1088] },
+            { name: "Mérida", coords: [38.9170, -6.3440] },
+            { name: "Valencia", coords: [39.4699, -0.3763] },
+            { name: "Timmins", coords: [48.4758, -81.3305] },
+            { name: "Ottawa", coords: [45.4215, -75.6972] },
+            { name: "Toronto", coords: [43.6510, -79.3470] }
+        ];
+
+        cities.forEach(city => {
+            L.marker(city.coords).addTo(map)
+                .bindPopup(`<b>${city.name}</b>`)
+                .openPopup();
+        });
+    </script>
+</body>
+</html>
