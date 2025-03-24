@@ -6,8 +6,35 @@
     <title>Our Menu</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .back-button {
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             margin: 20px 0;
+        }
+        .menu-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 200px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .menu-box:nth-child(1) {
+            background-color: #9fff96; /* Red */
+        }
+        .menu-box:nth-child(2) {
+            background-color: #a3d0fe; /* Blue */
+        }
+        .menu-box:hover {
+            transform: scale(1.05);
+        }
+        .back-button {
+            margin: 40px 0 20px; /* Add more margin to the top */
             padding: 10px 20px;
             font-size: 1em;
             background-color: #007bff;
@@ -26,7 +53,11 @@
         <h1>Our Menu</h1>
     </header>
     <main>
-        <p>Content for Our Menu.</p>
+        <h2>Our Recipes</h2>
+        <div class="menu-container">
+            <div class="menu-box" onclick="location.href='bucketas.html'">Bucketas</div>
+            <div class="menu-box" onclick="location.href='cookies-and-milk.html'">Cookies and Milk</div>
+        </div>
         <a href="index.html" class="back-button">Back to Home</a>
     </main>
     <footer>

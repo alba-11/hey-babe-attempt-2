@@ -6,6 +6,45 @@
     <title>Love Story Timeline</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px; /* Add margin to the bottom */
+        }
+        .timeline-event {
+            position: relative;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background-color: #007bff;
+        }
+        .timeline-event:first-child::before {
+            display: none;
+        }
+        .timeline-event h3 {
+            margin: 0;
+            font-size: 1em;
+            color: #007bff;
+        }
+        .timeline-event p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: #333;
+        }
         .back-button {
             margin: 20px 0;
             padding: 10px 20px;
@@ -26,7 +65,44 @@
         <h1>Love Story Timeline</h1>
     </header>
     <main>
-        <p>Content for Love Story Timeline.</p>
+        <div class="timeline">
+            <div class="timeline-event">
+                <h3>September 2023</h3>
+                <p>We met</p>
+            </div>
+            <div class="timeline-event">
+                <h3>September 15</h3>
+                <p>"Hey, can I have your snap?"</p>
+            </div>
+            <div class="timeline-event">
+                <h3>February 14, 2024</h3>
+                <p>First Valentine's together</p>
+            </div>
+            <div class="timeline-event">
+                <h3>February 15</h3>
+                <p>"Do you wanna go out with me? No."</p>
+            </div>
+            <div class="timeline-event">
+                <h3>February 18</h3>
+                <p>"Do you want to go out with me? Yes"</p>
+            </div>
+            <div class="timeline-event">
+                <h3>June 13</h3>
+                <p>Trip to the cottage</p>
+            </div>
+            <div class="timeline-event">
+                <h3>August 17</h3>
+                <p>Trip to Spain</p>
+            </div>
+            <div class="timeline-event">
+                <h3>December 2024</h3>
+                <p>First Christmas together</p>
+            </div>
+            <div class="timeline-event">
+                <h3>Now</h3>
+                <p>Ongoing</p>
+            </div>
+        </div>
         <a href="index.html" class="back-button">Back to Home</a>
     </main>
     <footer>
