@@ -19,6 +19,19 @@
         .back-button:hover {
             background-color: #0056b3;
         }
+        .countdown-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .countdown {
+            font-size: 1.2em;
+            color: #333;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -28,9 +41,35 @@
     <main>
         <p>Content for Countdowns.</p>
         <a href="index.html" class="back-button">Back to Home</a>
+
+        <div class="countdown-container">
+            <div class="countdown" id="alba-bday">Alba's 18th Birthday: Calculating...</div>
+            <div class="countdown" id="arden-bday">Arden's 18th Birthday: Calculating...</div>
+            <div class="countdown" id="see-each-other">Days Until We See Each Other: Calculating...</div>
+        </div>
     </main>
     <footer>
         <p>&copy; 2025 Our Relationship, Now a Website</p>
     </footer>
+
+    <script>
+        function calculateCountdown(targetDate, elementId) {
+            const now = new Date();
+            const target = new Date(targetDate);
+            const difference = target - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                document.getElementById(elementId).textContent = `${days} days remaining`;
+            } else {
+                document.getElementById(elementId).textContent = "The day has arrived!";
+            }
+        }
+
+        // Set countdowns
+        calculateCountdown("2024-04-27", "alba-bday");
+        calculateCountdown("2024-06-13", "arden-bday");
+        calculateCountdown("2024-06-24", "see-each-other");
+    </script>
 </body>
 </html>
