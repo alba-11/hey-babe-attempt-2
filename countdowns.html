@@ -20,17 +20,30 @@
             background-color: #0056b3;
         }
         .countdown-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
+            padding: 20px;
+        }
+        .countdown-box {
+            width: 250px;
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        .countdown-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
         .countdown {
             font-size: 1.2em;
-            color: #333;
-            margin: 10px 0;
+            color: #555;
         }
     </style>
 </head>
@@ -43,9 +56,18 @@
         <a href="index.html" class="back-button">Back to Home</a>
 
         <div class="countdown-container">
-            <div class="countdown" id="alba-bday">Alba's 18th Birthday: Calculating...</div>
-            <div class="countdown" id="arden-bday">Arden's 18th Birthday: Calculating...</div>
-            <div class="countdown" id="see-each-other">Days Until We See Each Other: Calculating...</div>
+            <div class="countdown-box">
+                <div class="countdown-title">Alba's 18th Birthday</div>
+                <div class="countdown" id="alba-bday">Calculating...</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-title">Arden's 18th Birthday</div>
+                <div class="countdown" id="arden-bday">Calculating...</div>
+            </div>
+            <div class="countdown-box">
+                <div class="countdown-title">Days Until We See Each Other</div>
+                <div class="countdown" id="see-each-other">Calculating...</div>
+            </div>
         </div>
     </main>
     <footer>
@@ -66,10 +88,10 @@
             }
         }
 
-        // Set countdowns
-        calculateCountdown("2024-04-27", "alba-bday");
-        calculateCountdown("2024-06-13", "arden-bday");
-        calculateCountdown("2024-06-24", "see-each-other");
+        // Set countdowns for 2025
+        calculateCountdown("2025-04-27", "alba-bday");
+        calculateCountdown("2025-06-13", "arden-bday");
+        calculateCountdown("2025-06-24", "see-each-other");
     </script>
 </body>
 </html>
