@@ -68,3 +68,36 @@ footer {
     padding: 10px 20px;
     font-size: 1em;
 }
+
+/* Scrolling banner styles */
+.scrolling-banner {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #f8f9fa;
+    color: #333;
+    font-size: 1.2em;
+    padding: 10px 0;
+}
+
+.scrolling-banner.top-banner {
+    border-bottom: 1px solid #ccc;
+}
+
+.scrolling-banner.bottom-banner {
+    border-top: 1px solid #ccc;
+}
+
+.scrolling-text {
+    display: inline-block;
+    animation: scroll 15s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

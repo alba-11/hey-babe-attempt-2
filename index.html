@@ -55,10 +55,34 @@
             padding: 10px 20px;
             font-size: 1em;
         }
+        .scrolling-banner {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .scrolling-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
     </style>
 </head>
 <body>
     <header>
+        <!-- Add scrolling banner at the top -->
+        <div class="scrolling-banner top-banner">
+            <div class="scrolling-text">
+                I love you | Te amo | Je t'aime | Ich liebe dich | Ti amo | Eu te amo | 我爱你 | 사랑해 | Я тебя люблю | أحبك
+            </div>
+        </div>
         <h1>Our Relationship, Now a Website</h1>
         <p class="subtext">Hey, babe. It's me, your amazing girlfriend. It's currently 22:15h and this is my attempt n2 at making a website for our relationship because I wanted to try doing some coding. Anywhoodle, I hope you like it and enjoy it while you get your appendix removed. Love, your future wife.</p>
     </header>
@@ -95,6 +119,12 @@
         </div>
     </main>
     <footer>
+        <!-- Add scrolling banner at the bottom -->
+        <div class="scrolling-banner bottom-banner">
+            <div class="scrolling-text">
+                I love you | Te amo | Je t'aime | Ich liebe dich | Ti amo | Eu te amo | 我爱你 | 사랑해 | Я тебя люблю | أحبك
+            </div>
+        </div>
         <p>&copy; 2025 Our Relationship, Now a Website</p>
     </footer>
     <script src="scripts.js"></script> <!-- Link to an external JavaScript file -->
