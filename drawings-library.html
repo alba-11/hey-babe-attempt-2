@@ -14,10 +14,29 @@
         <div id="gallery" class="gallery">
             <p>Loading drawings...</p>
         </div>
+        <div id="drawingsContainer"></div>
     </main>
     <footer>
         <p>&copy; 2025 Our Relationship, Now a Website</p>
     </footer>
     <script type="module" src="drawings-library.js"></script>
+    <script>
+        const drawingsContainer = document.getElementById('drawingsContainer');
+
+        // Fetch drawings from Firebase Realtime Database
+        database.ref('drawings').on('value', (snapshot) => {
+            drawingsContainer.innerHTML = ''; // Clear existing drawings
+            const drawings = snapshot.val();
+            for (const key in drawings) {
+                const drawing = drawings[key];
+                const img = document.createElement('img');
+                img.src = drawing.url;
+                img.alt = drawing.name;
+                img.style.width = '200px'; // Adjust size as needed
+                img.style.margin = '10px';
+                drawingsContainer.appendChild(img);
+            }
+        });
+    </script>
 </body>
 </html>
