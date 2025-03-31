@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Relationship, Now a Website</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to an external CSS file -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,6 +73,14 @@
                 transform: translateX(-100%);
             }
         }
+        /* Style for the Drawings Library box */
+        .box.drawings-library {
+            background-color: pink; /* Set the background color to pink */
+            color: black; /* Ensure the text is readable */
+            font-weight: bold; /* Make the text bold */
+            border: 1px solid #ccc; /* Optional: Add a border */
+            cursor: pointer; /* Show a pointer cursor on hover */
+        }
     </style>
 </head>
 <body>
@@ -112,6 +120,22 @@
             </ul>
         </section>
 
+        <!-- Whiteboard Section -->
+        <section class="whiteboard">
+            <h2>Our Whiteboard</h2>
+            <canvas id="drawingCanvas" width="800" height="400" style="border: 1px solid black;"></canvas>
+            <div class="whiteboard-controls">
+                <button id="clearCanvas">Clear</button>
+                <button id="saveDrawing">Save</button>
+            </div>
+            <h3>Gallery</h3>
+            <div id="gallery"></div>
+        </section>
+
+        <div class="boxes">
+        <div class="box" onclick="location.href='drawings-library.html'">Drawings Library</div>
+    </div>
+
         <p>After you've looked through the cute little boxes you can leave me your opinion down below and any suggestions for our website (it won't save your answers because I haven't figured out that yet, but it will in the future).</p>
         <div class="suggestions">
             <textarea placeholder="Leave your suggestions here..."></textarea><br>
@@ -127,6 +151,6 @@
         </div>
         <p>&copy; 2025 Our Relationship, Now a Website</p>
     </footer>
-    <script src="scripts.js"></script> <!-- Link to an external JavaScript file -->
+    <script src="scripts.js" type="module"></script>
 </body>
 </html>

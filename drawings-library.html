@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawings Gallery</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px;
+        }
+        .gallery img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Drawings Gallery</h1>
+    </header>
+    <main>
+        <div class="gallery" id="gallery"></div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Our Relationship, Now a Website</p>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getStorage, ref, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-storage.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI292VLdg9rv9cEblNvkNqrB8OO2bEWSk",
+            authDomain: "our-website-1.firebaseapp.com",
+            projectId: "our-website-1",
+            storageBucket: "our-website-1.appspot.com",
+            messagingSenderId: "427936856061",
+            appId: "1:427936856061:web:743bd02045383807bd4b94"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+
+        // Load gallery from Firebase
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = ''; // Clear existing images
+            const listRef = ref(storage, 'drawings/');
+            const res = await listAll(listRef);
+            for (const itemRef of res.items) {
+                const url = await getDownloadURL(itemRef);
+                const img = document.createElement('img');
+                img.src = url;
+                gallery.appendChild(img);
+            }
+        }
+
+        // Load gallery on page load
+        loadGallery();
+    </script>
+</body>
+</html>

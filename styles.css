@@ -27,7 +27,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #e9ecef;
     cursor: pointer;
+    margin: 20px auto;
     transition: transform 0.3s;
 }
 .box:nth-child(1) {
@@ -51,6 +53,16 @@ header {
 .box:hover {
     transform: scale(1.05);
 }
+
+/* Style for the Drawings Library box */
+.box.drawings-library {
+    background-color: pink; /* Set the background color to pink */
+    color: black; /* Ensure the text is readable */
+    font-weight: bold; /* Make the text bold */
+    border: 1px solid #ccc; /* Optional: Add a border */
+    cursor: pointer; /* Show a pointer cursor on hover */
+}
+
 footer {
     margin-top: 20px;
     padding: 20px;
@@ -100,4 +112,34 @@ footer {
     100% {
         transform: translateX(-100%);
     }
+}
+
+.whiteboard {
+    margin: 20px 0;
+    text-align: center;
+}
+#drawingCanvas {
+    border: 1px solid #ccc;
+    cursor: crosshair;
+}
+.whiteboard-controls {
+    margin: 10px 0;
+}
+.whiteboard-controls button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 1em;
+}
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+#gallery img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #ccc;
 }
