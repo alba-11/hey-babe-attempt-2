@@ -128,8 +128,6 @@
                 <button id="clearCanvas">Clear</button>
                 <button id="saveDrawing">Save</button>
             </div>
-            <h3>Gallery</h3>
-            <div id="gallery"></div>
         </section>
 
         <div class="boxes">
@@ -152,5 +150,30 @@
         <p>&copy; 2025 Our Relationship, Now a Website</p>
     </footer>
     <script src="scripts.js" type="module"></script>
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent scrolling or zooming
+            isDrawing = true;
+            const touch = e.touches[0];
+            [lastX, lastY] = [touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop];
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Prevent scrolling or zooming
+            if (!isDrawing) return;
+            const touch = e.touches[0];
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
+            ctx.stroke();
+            [lastX, lastY] = [touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop];
+        });
+    </script>
 </body>
 </html>

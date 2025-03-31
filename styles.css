@@ -119,16 +119,22 @@ footer {
     text-align: center;
 }
 #drawingCanvas {
-    border: 1px solid #ccc;
-    cursor: crosshair;
+    display: block;
+    margin: 0 auto;
+    z-index: 10; /* Ensure it's above other elements */
+    position: relative;
+    border: 1px solid black; /* Add a border for visibility */
+    background-color: white; /* Ensure the background is white */
 }
 .whiteboard-controls {
-    margin: 10px 0;
+    margin-top: 10px;
+    text-align: center;
 }
 .whiteboard-controls button {
     padding: 10px 20px;
-    margin: 0 5px;
-    font-size: 1em;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
 }
 #gallery {
     display: flex;
@@ -142,4 +148,17 @@ footer {
     height: 150px;
     object-fit: cover;
     border: 1px solid #ccc;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+.gallery img {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }

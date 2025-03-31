@@ -1,24 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
-        box.addEventListener('click', () => {
-            const pageName = box.textContent.toLowerCase().replace(/ /g, '-').replace(/'/g, '').replace(/,/g, '') + '.html';
-            window.location.href = pageName;
-        });
-    });
-});
-
-// Optional: Dynamically adjust scrolling speed based on screen size
-window.addEventListener('resize', () => {
-    const scrollingTexts = document.querySelectorAll('.scrolling-text');
-    scrollingTexts.forEach(text => {
-        const speed = window.innerWidth < 768 ? 20 : 15; // Adjust speed for smaller screens
-        text.style.animationDuration = `${speed}s`;
-    });
-});
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getStorage, ref as storageRef, uploadString, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -34,66 +16,112 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const storage = getStorage(app);
 
-// Select the canvas and buttons
-const canvas = document.getElementById('drawingCanvas');
-const ctx = canvas.getContext('2d');
-const clearButton = document.getElementById('clearCanvas');
-const saveButton = document.getElementById('saveDrawing');
-const gallery = document.getElementById('gallery');
+document.addEventListener('DOMContentLoaded', () => {
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+            const pageName = box.textContent.toLowerCase().replace(/ /g, '-').replace(/'/g, '').replace(/,/g, '') + '.html';
+            window.location.href = pageName;
+        });
+    });
 
-// Variables for drawing
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
 
-// Set initial drawing settings
-ctx.strokeStyle = 'black';
-ctx.lineWidth = 2;
-ctx.lineJoin = 'round';
-ctx.lineCap = 'round';
+    // Ensure canvas has a valid size
+    function ensureCanvasSize() {
+        if (canvas.width === 0 || canvas.height === 0) {
+            canvas.width = 800; // Default width
+            canvas.height = 400; // Default height
+        }
+    }
+    ensureCanvasSize();
 
-// Start drawing
-canvas.addEventListener('mousedown', (e) => {
-    isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    // Variables to track drawing state
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    // Set up canvas for drawing
+    ctx.strokeStyle = '#000'; // Default stroke color (black)
+    ctx.lineWidth = 2; // Default line width
+
+    // Mouse events for drawing
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    canvas.addEventListener('mouseup', () => (isDrawing = false));
+    canvas.addEventListener('mouseout', () => (isDrawing = false));
+
+    // Touch events for drawing (for mobile devices)
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent scrolling or zooming
+        isDrawing = true;
+        const touch = e.touches[0];
+        [lastX, lastY] = [touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop];
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault(); // Prevent scrolling or zooming
+        if (!isDrawing) return;
+        const touch = e.touches[0];
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
+        ctx.stroke();
+        [lastX, lastY] = [touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop];
+    });
+
+    canvas.addEventListener('touchend', () => (isDrawing = false));
+
+    // Clear canvas functionality
+    document.getElementById('clearCanvas').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Save drawing to Firebase
+    document.getElementById('saveDrawing').addEventListener('click', async () => {
+        const dataURL = canvas.toDataURL('image/png'); // Get the drawing as a base64 string
+        const fileName = `drawing_${Date.now()}.png`; // Unique filename based on timestamp
+        const storageReference = storageRef(storage, `drawings/${fileName}`); // Reference to Firebase Storage
+
+        try {
+            await uploadString(storageReference, dataURL, 'data_url'); // Upload the base64 string to Firebase
+            alert('Drawing saved successfully!');
+        } catch (error) {
+            console.error('Error saving drawing:', error);
+            alert('Failed to save the drawing. Please try again.');
+        }
+    });
 });
 
-// Draw on the canvas
-canvas.addEventListener('mousemove', (e) => {
-    if (!isDrawing) return;
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-});
-
-// Stop drawing
-canvas.addEventListener('mouseup', () => (isDrawing = false));
-canvas.addEventListener('mouseout', () => (isDrawing = false));
-
-// Clear the canvas
-clearButton.addEventListener('click', () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-});
-
-// Save the drawing
-saveButton.addEventListener('click', () => {
-    const dataURL = canvas.toDataURL('image/png');
-    const img = document.createElement('img');
-    img.src = dataURL;
-    img.alt = 'Saved Drawing';
-    img.style.width = '200px'; // Optional: Set thumbnail size
-    img.style.margin = '10px';
-    gallery.appendChild(img);
+// Optional: Dynamically adjust scrolling speed based on screen size
+window.addEventListener('resize', () => {
+    const scrollingTexts = document.querySelectorAll('.scrolling-text');
+    scrollingTexts.forEach(text => {
+        const speed = window.innerWidth < 768 ? 20 : 15; // Adjust speed for smaller screens
+        text.style.animationDuration = `${speed}s`;
+    });
 });
 
 // Load gallery from Firebase
 async function loadGallery() {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Clear existing images
-    const listRef = ref(storage, 'drawings/');
+    const listRef = storageRef(storage, 'drawings/');
     const res = await listAll(listRef);
     for (const itemRef of res.items) {
         const url = await getDownloadURL(itemRef);
