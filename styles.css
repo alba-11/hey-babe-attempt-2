@@ -125,6 +125,7 @@ footer {
     position: relative;
     border: 1px solid black; /* Add a border for visibility */
     background-color: white; /* Ensure the background is white */
+    cursor: crosshair; /* Show a crosshair cursor for drawing */
 }
 .whiteboard-controls {
     margin-top: 10px;

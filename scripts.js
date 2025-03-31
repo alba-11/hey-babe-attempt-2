@@ -30,14 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Ensure canvas has a valid size
-    function ensureCanvasSize() {
-        if (canvas.width === 0 || canvas.height === 0) {
-            canvas.width = 800; // Default width
-            canvas.height = 400; // Default height
-        }
-    }
-    ensureCanvasSize();
+    // Set canvas size
+    canvas.width = 800;
+    canvas.height = 400;
 
     // Variables to track drawing state
     let isDrawing = false;
@@ -50,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mouse events for drawing
     canvas.addEventListener('mousedown', (e) => {
+        console.log('Mouse down:', e.offsetX, e.offsetY);
         isDrawing = true;
         [lastX, lastY] = [e.offsetX, e.offsetY];
     });
