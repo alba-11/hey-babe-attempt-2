@@ -89,18 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Save drawing to Firebase
-    document.getElementById('saveDrawing').addEventListener('click', async () => {
-        const dataURL = canvas.toDataURL('image/png'); // Get the drawing as a base64 string
-        const fileName = `drawing_${Date.now()}.png`; // Unique filename based on timestamp
-        const storageReference = storageRef(storage, `drawings/${fileName}`); // Reference to Firebase Storage
+    document.getElementById('saveDrawing').addEventListener('click', () => {
+        // Convert canvas to a data URL (base64-encoded image)
+        const drawingDataURL = canvas.toDataURL();
 
-        try {
-            await uploadString(storageReference, dataURL, 'data_url'); // Upload the base64 string to Firebase
-            alert('Drawing saved successfully!');
-        } catch (error) {
-            console.error('Error saving drawing:', error);
-            alert('Failed to save the drawing. Please try again.');
-        }
+        // Create a unique key for the drawing
+        const drawingKey = database.ref('drawings').push().key;
+
+        // Save the drawing data to the Realtime Database
+        database.ref(`drawings/${drawingKey}`).set({
+            name: `drawing_${Date.now()}.png`,
+            data: drawingDataURL // Store the base64-encoded image data
+        }).then(() => {
+            alert('Drawing saved to Firebase Realtime Database!');
+        }).catch((error) => {
+            console.error('Error saving drawing to Firebase:', error);
+        });
     });
 });
 

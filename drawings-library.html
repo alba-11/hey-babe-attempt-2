@@ -27,14 +27,18 @@
         database.ref('drawings').on('value', (snapshot) => {
             drawingsContainer.innerHTML = ''; // Clear existing drawings
             const drawings = snapshot.val();
-            for (const key in drawings) {
-                const drawing = drawings[key];
-                const img = document.createElement('img');
-                img.src = drawing.url;
-                img.alt = drawing.name;
-                img.style.width = '200px'; // Adjust size as needed
-                img.style.margin = '10px';
-                drawingsContainer.appendChild(img);
+            if (drawings) {
+                for (const key in drawings) {
+                    const drawing = drawings[key];
+                    const img = document.createElement('img');
+                    img.src = drawing.data; // Use the base64-encoded image data
+                    img.alt = drawing.name;
+                    img.style.width = '200px'; // Adjust size as needed
+                    img.style.margin = '10px';
+                    drawingsContainer.appendChild(img);
+                }
+            } else {
+                drawingsContainer.innerHTML = '<p>No drawings found.</p>';
             }
         });
     </script>

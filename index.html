@@ -188,10 +188,27 @@
 
         // Save the drawing as an image
         document.getElementById('saveDrawing').addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.download = 'drawing.png';
-            link.href = canvas.toDataURL();
-            link.click();
+            // Convert canvas to a data URL (base64-encoded image)
+            const drawingDataURL = canvas.toDataURL();
+
+            // Log the drawing data URL
+            console.log('Drawing Data URL:', drawingDataURL);
+
+            // Create a unique key for the drawing
+            const drawingKey = database.ref('drawings').push().key;
+
+            // Log the Firebase database reference
+            console.log('Firebase Database Reference:', database.ref('drawings'));
+
+            // Save the drawing data to the Realtime Database
+            database.ref(`drawings/${drawingKey}`).set({
+                name: `drawing_${Date.now()}.png`,
+                data: drawingDataURL // Store the base64-encoded image data
+            }).then(() => {
+                alert('Drawing saved to Firebase Realtime Database!');
+            }).catch((error) => {
+                console.error('Error saving drawing to Firebase:', error);
+            });
         });
     </script>
     <script>
@@ -206,37 +223,9 @@
   appId: "1:427936856061:web:743bd02045383807bd4b94"
 };
 
-
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const storage = firebase.storage();
-    </script>
-    <script>
-    document.getElementById('saveDrawing').addEventListener('click', () => {
-        // Convert canvas to a data URL
-        const drawingDataURL = canvas.toDataURL();
-
-        // Create a unique filename for the drawing
-        const fileName = `drawing_${Date.now()}.png`;
-
-        // Upload the drawing to Firebase Storage
-        const storageRef = storage.ref(`drawings/${fileName}`);
-        storageRef.putString(drawingDataURL, 'data_url').then((snapshot) => {
-            console.log('Uploaded a drawing!');
-
-            // Get the download URL and save it to the Realtime Database
-            storageRef.getDownloadURL().then((url) => {
-                database.ref('drawings').push({
-                    name: fileName,
-                    url: url
-                });
-                alert('Drawing saved to Firebase!');
-            });
-        }).catch((error) => {
-            console.error('Error uploading drawing:', error);
-        });
-    });
     </script>
 </body>
 </html>
